@@ -14,17 +14,33 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Rest APIs (this have 2 get APIs)
+// Rest APIs
+
+// getAPI
 app.get("/users", (req, res) => {
-  controller.getUsers((users) => {
-    res.send(users);
+  controller.getUsers((req, res, next) => {
+    res.send();
   });
 });
 
-app.get("/user", (req, res) => {
-  const id = req.body.id;
-  controller.getUserById((id, user) => {
-    res.send(user);
+// post Api
+app.post("/createuser", (req, res) => {
+  controller.addUser(req.body, (callback) => {
+    res.send();
+  });
+});
+
+// update Api
+app.put("/updateuser", (req, res) => {
+  controller.updateUser(req.body, (callback) => {
+    res.send(callback);
+  });
+});
+
+// delete Api
+app.get("/deleteuser", (req, res) => {
+  controller.deleteUser(req.body, (callback) => {
+    res.send(callback);
   });
 });
 
